@@ -12,13 +12,28 @@ h1 {
 	text-align: center;
 }
 
-a {
+circle:hover {
+	fill: #fdfdfd;
+}
+
+svg {
+	width: 100%;
+	height: auto;
+	background-color: #5d5d5d;
+}
+
+#navlist a {
 	color: #fdfdfd;
 	text-decoration: none;
-	
+}
+
+#navlist a:hover {
+	color: #a8de78;
+	text-decoration: none;
 }
 
 #navlist {
+	text-align: center;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -37,13 +52,46 @@ a {
 	color: #fdfdfd;
 	padding: 14px 16px;
 	text-decoration: none;
-	font-size: 38px;
+	font-size: 36px;
 }
 
 .navbar {
+	margin: 0 auto;
+	width: 100%;
 	background-color: #262626;
 	border-color: #080808;
 	display: inline-block;
 	margin: 0;
 	width: 100%;
 };
+
+
+.row {
+  display: flex;
+  flex: 50%;
+
+}
+
+.column {
+  width: 40%;
+	float: left;
+	padding: 3%;
+}
+
+#pageContainer {
+	width: 100%;
+	margin: 0 auto;
+}
+
+p {
+	text-indent: 5%;
+	font-size: large;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+img {
+	width: 75%;
+	height: auto;
+	margin-left: 7.5%;
+	margin-bottom: 15px;
+}

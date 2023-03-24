@@ -6,64 +6,58 @@
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js"></script>
     </head>
-    <body>
+    <body></body>
+			<div id="pageContainer">
 			<!-- Nav bar section-->
 			<div class="navbar">
 				<ul id="navlist">
 					<li>
-						<a href="index.html">Home</h1>
+						<a href="index.html">Home</a>
 					</li>
 					<li>
-						<a href="about.html">About</h1>
+						<a href="visualizations.html">Visualizations</a>
 					</li>
 					<li>
-						<a href="data.html">Data</h1>
+						<a href="data.html">Data</a>
 					</li>
 					<li>
-						<a href="contact.html">Contact</h1>
+						<a href="about.html">About</a>
 					</li>
 				</ul>
 			</div>
-			<!-- End of nav bar section -->
-			<div>
-				<h1>
-					Dementia Climate Relationships
-				</h1>
-				<script>
-					var chartwidth = 900;
-					var chartheight = 400;
-					var margin = 50;
-					var maxx = 15;
-					var maxy = 15;
-				
-					// create the svg element
-					d3.select("body")
-					.append("svg")
-					.attr("id","scatter")
-					.attr("width", chartwidth + 2 * margin )
-					.attr("height", chartheight + 2 * margin )
-					.append("g")
-
-					.call(d3.axisBottom(d3.scaleLinear().domain([0,maxx]).range([0,chartwidth])))
-					.attr("transform","translate(" + margin + "," + (chartheight + margin) + ")");
-
-					d3.csv("data/testData.csv", function(data) {
-						d3.select("#scatter")
-						.append("g")
-						.call(d3.axisLeft(d3.scaleLinear().domain([0,maxy]).range([chartheight,0])))
-						.attr("transform","translate(" + margin + "," + margin + ")");
-						console.log(data);
-						// plot the points from data
-						d3.select("#scatter")
-						.selectAll("circle")
-						.data(data)
-						.enter()
-						.append("circle")
-						.attr("cx", function (d) { return d.x * (chartwidth/maxx) + margin; } )
-						.attr("cy", function (d) { return chartheight - d.y * (chartheight/maxy) + margin; } )
-						.attr("r", 5)
-					});
-				</script>
+			<div class="row">
+				<div class="column">
+					<h2>
+						What is Dementia?
+					</h2>
+					<p>
+					Dementia is a group of symptoms associated with a decline in 
+					cognitive function that affects memory, thinking, behavior, and 
+					the ability to perform everyday activities. It is a progressive 
+					condition that affects a person's ability to function independently and 
+					carry out daily tasks.
+					</p>
+					<p>
+						The most common cause of dementia is Alzheimer's disease, but other 
+						causes include vascular dementia, Lewy body dementia, frontotemporal 
+						dementia, and Huntington's disease. Dementia can also be caused by other
+						 medical conditions, such as Parkinson's disease, brain injuries, or infections.
+					</p>
+					<p>
+						The symptoms of dementia can vary depending on the cause and the stage of
+						 the disease, but common symptoms include memory loss, difficulty with 
+						 language and communication, poor judgment, disorientation, and changes in 
+						 mood and behavior. As the disease progresses, a person may also experience
+						 difficulty with movement and coordination, and may require assistance with 
+						 activities of daily living.
+					</p>
+				</div>
+				<div class="column">
+					<img src="images/brain1.jpeg" alt="brain">
+					<img src="images/brain2.jpeg" alt="brain">
+				</div>
 			</div>
+			</div>
+
 	</body>
 </html>

@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dementia Climate Relationships</title>
+		<link rel="stylesheet" href="styles.css">
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js"></script>
+    </head>
+    <body>
+			<!-- Nav bar section-->
+			<div class="navbar">
+				<ul id="navlist">
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li>
+						<a href="visualizations.html">Visualizations</a>
+					</li>
+					<li>
+						<a href="data.html">Data</a>
+					</li>
+					<li>
+						<a href="about.html">About</a>
+					</li>
+				</ul>
+			</div>
+			<!-- End of nav bar section -->
+			<div>
+				<h1>
+					Dementia Climate Relationships
+				</h1>
+				<script>
+					var chartwidth = 900;
+					var chartheight = 400;
+					var margin = 50;
+					var maxx = 15;
+					var maxy = 15;
+				
+					// create the svg element
+					d3.select("body")
+					.append("svg")
+					.attr("id","scatter")
+					.attr("width", chartwidth + 2 * margin )
+					.attr("height", chartheight + 2 * margin )
+					.append("g")
+
+					.call(d3.axisBottom(d3.scaleLinear().domain([0,maxx]).range([0,chartwidth])))
+					.attr("transform","translate(" + margin + "," + (chartheight + margin) + ")");
+
+					d3.csv("data/testData.csv", function(data) {
+						d3.select("#scatter")
+						.append("g")
+						.call(d3.axisLeft(d3.scaleLinear().domain([0,maxy]).range([chartheight,0])))
+						.attr("transform","translate(" + margin + "," + margin + ")");
+						console.log(data);
+						// plot the points from data
+						d3.select("#scatter")
+						.selectAll("circle")
+						.data(data)
+						.enter()
+						.append("circle")
+						.attr("cx", function (d) { return d.x * (chartwidth/maxx) + margin; } )
+						.attr("cy", function (d) { return chartheight - d.y * (chartheight/maxy) + margin; } )
+						.attr("r", 5)
+					});
+				</script>
+			</div>
+	</body>
+</html>
