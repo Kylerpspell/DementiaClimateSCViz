@@ -33,8 +33,8 @@
 					var chartwidth = 900;
 					var chartheight = 400;
 					var margin = 50;
-					var maxx = 15;
-					var maxy = 15;
+					var maxx = 2023;
+					var maxy = 100;
 				
 					// create the svg element
 					d3.select("body")
@@ -44,24 +44,32 @@
 					.attr("height", chartheight + 2 * margin )
 					.append("g")
 
-					.call(d3.axisBottom(d3.scaleLinear().domain([0,maxx]).range([0,chartwidth])))
+					.call(d3.axisBottom(d3.scaleLinear().domain([1980,maxx]).range([0,chartwidth])))
 					.attr("transform","translate(" + margin + "," + (chartheight + margin) + ")");
 
-					d3.csv("../data/testData.csv", function(data) {
+					d3.csv("../data/NewmanRequestCleaned.csv", function(data) {
 						d3.select("#scatter")
 						.append("g")
 						.call(d3.axisLeft(d3.scaleLinear().domain([0,maxy]).range([chartheight,0])))
 						.attr("transform","translate(" + margin + "," + margin + ")");
 						console.log(data);
-						// plot the points from data
-						d3.select("#scatter")
+					// plot the points from data
+					d3.select("#scatter")
 						.selectAll("circle")
 						.data(data)
 						.enter()
 						.append("circle")
-						.attr("cx", function (d) { return d.x * (chartwidth/maxx) + margin; } )
-						.attr("cy", function (d) { return chartheight - d.y * (chartheight/maxy) + margin; } )
+						.attr("cx", function (d) { return d.YODX * (chartwidth/maxx) + margin; } )
+						.attr("cy", function (d) { return chartheight - d.DX_AGE * (chartheight/maxy) + margin; } )
 						.attr("r", 5)
+					d3.select("#scatter")
+						.selectAll("text")
+						.data(data)
+						.enter()
+						.append("text")
+						.attr("x", function (d) { return d.YODX * (chartwidth/maxx) + margin; } )
+						.attr("y", function (d) { return chartheight - d.DX_AGE * (chartheight/maxy) + margin; } )
+						.text(function (d) { return d.DX; })
 					});
 				</script>
 			</div>

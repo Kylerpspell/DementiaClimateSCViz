@@ -16,7 +16,7 @@ circle:hover {
 	fill: #a8de78;
 }
 
-svg {
+#chart.svg {
 	width: 100%;
 	height: auto;
 	background-color: #5d5d5d;
@@ -54,7 +54,7 @@ svg {
 }
 
 .navbar {
-	width: fit-content;
+	width: auto;
 	background-color: #262626;
 	border-color: #080808;
 	display: inline-block;
@@ -85,10 +85,10 @@ p {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-img {
-	width: 75%;
+.column img {
+	width: 50%;
 	height: auto;
-	margin-left: 7.5%;
+	margin-left: 40%;
 	margin-bottom: 15px;
 	border-radius: 5%;
 
@@ -110,7 +110,7 @@ img {
 	width: 25%;
 	height: auto;
 	float: left;
-	margin: 0;
+	margin-right: 30;
 	padding: 10;
 	background-color: #a9a9a9;
 	border-radius: 5px;
@@ -119,7 +119,7 @@ img {
 }
 
 .galleryElement:hover {
-	background-color: #a8de78;
+	background-color: #deae78;
 	color: #000000;
 }
 
@@ -139,3 +139,42 @@ img {
 	margin-right: 5px;
 }
 
+.chart {
+	height: auto;
+	margin-left: 25%;
+	display: inline-block;
+	padding-left: 5px;
+	padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 30px;
+  }
+
+.bar-label {
+	font-size: 19px;
+	text-anchor: end;
+	fill: white;
+}
+
+.legend {
+	width: auto;
+	display: inline-block;
+	padding: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+.legend-item {
+	margin-right: 10px;
+	cursor: pointer;
+	opacity: 0.8;
+	color: #fff;
+}
+.legend-item:hover {
+	opacity: 1.0;
+}
+
+#wrapper {
+	width: 100%;
+	margin: 0 auto;
+	display: block;
+}
