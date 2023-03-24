@@ -13,7 +13,7 @@ h1 {
 }
 
 circle:hover {
-	fill: #fdfdfd;
+	fill: #a8de78;
 }
 
 svg {
@@ -95,3 +95,42 @@ img {
 	margin-left: 7.5%;
 	margin-bottom: 15px;
 }
+
+.gallery {
+	margin: 20 auto;
+	width: 80%;
+}
+
+.galleryElement {
+	width: 25%;
+	height: auto;
+	float: left;
+	margin: 0;
+	padding: 10;
+	background-color: #a9a9a9;
+	border-radius: 5px;
+	text-align: center;
+	font-size: large;
+}
+
+.galleryElement:hover {
+	background-color: #a8de78;
+	color: #000000;
+}
+
+.grow {
+	transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+	transform: scale(1.1);
+}
+
+.galleryElement img {
+	width: 100%;
+	height: auto;
+	margin-left: 5px;
+	margin-bottom: 15px;
+	margin-right: 5px;
+}
+
