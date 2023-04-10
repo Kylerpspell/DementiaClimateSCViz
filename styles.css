@@ -84,6 +84,15 @@ circle:hover {
 	padding: 3%;
 }
 
+.column img {
+	transition: ease-in-out 0.2s;
+}
+
+.column img:hover {
+	transform: scale(1.1);
+	
+}
+
 #pageContainer {
 	width: 100%;
 	margin: 0 auto;
@@ -117,10 +126,11 @@ p {
 }
 
 .galleryElement {
-	width: 30%;
-	height: 400px;
+	width: 20%;
+	height: 300px;
 	float: left;
 	margin-right: 30;
+	margin-bottom: 50;
 	padding: 10;
 	background-color: #a9a9a9;
 	border-radius: 5px;
@@ -129,7 +139,6 @@ p {
 }
 
 .galleryElement:hover {
-	background-color: #deae78;
 	color: #000000;
 }
 

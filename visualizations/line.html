@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dementia Climate Relationships</title>
+		<link rel="stylesheet" href="../styles.css">
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js"></script>
+    </head>
+    <body>
+			<!-- Nav bar section-->
+			<div class="navbar">
+				<ul id="navlist">
+					<li>
+						<a href="../index.html">Home</a>
+					</li>
+					<li>
+						<a href="../visualizations.html">Visualizations</a>
+					</li>
+					<li>
+						<a href="../data.html">Data</a>
+					</li>
+					<li>
+						<a href="../about.html">About</a>
+					</li>
+				</ul>
+			</div>
+			<!-- End of nav bar section -->
+			<div class="lineGraph">
+				<h1>
+					Dementia Climate Relationships
+				</h1>
+				<script>
+					var chartwidth = 1500;
+					var chartheight = 400;
+					var margin = 60;
+					var maxx = 2023;
+					var maxy = 30000;
+				
+					var svg = d3.select("body")
+						.append("svg")
+						.attr("width", chartwidth)
+						.attr("height", chartheight);
+					
+						var xScale = d3.scaleTime()
+							.domain([new Date("1988-01-01"), new Date("2023-01-01")])
+							.range([margin, chartwidth - margin])
+
+							var xAxis = d3.axisBottom(xScale)
+							.tickFormat(function(date){
+								d3.timeYear(date);
+							});
+					
+					var yScale = d3.scaleLinear()
+						.domain([0, maxy])
+						.range([chartheight - margin, margin]);
+					
+					// Add the X Axis
+					svg.append("g")
+						.attr("transform", "translate(0," + (chartheight - margin) + ")")
+						// make the text white
+						.attr("fill", "white")
+						.call(d3.axisBottom(xScale));
+					
+					// Add the Y Axis
+					svg.append("g")
+						.attr("transform", "translate(" + margin + ",0)")
+						// make the text white
+						.attr("fill", "white")
+						.call(d3.axisLeft(yScale));
+					
+					// make the axis and ticks white
+					svg.selectAll(".axis path")
+					.attr("stroke", "white")
+					.attr("stroke-width", 2);
+
+					svg.selectAll(".axis line")
+						.attr("stroke", "white")
+						.attr("stroke-width", 2);
+
+					svg.selectAll(".tick line")
+						.attr("stroke", "white")
+						.attr("stroke-width", 2);
+
+					svg.selectAll(".tick text")
+						.attr("fill", "white")
+						.attr("font-size", "1.5em");
+
+					d3.csv("../data/dementiaOverTime.csv", function(data) {
+						svg.selectAll("circles")
+							// make a transition so that the circles appear one by one
+							.data(data)
+							.enter()
+							.append("circle")
+							.attr("cx", function(d) { return xScale(+new Date(d.Year)); })
+							.attr("cy", chartheight - margin)
+							.attr("r", 5)
+							.attr("fill", "white")
+							.transition()
+							.duration(function(d, i) {
+								return i * 60;
+							})
+							.attr("cy", function(d) { return yScale(+d.Count); });
+
+						var line = d3.line()
+							.x(function(d) { return xScale(+new Date(d.Year)); })
+							.y(function(d) { return yScale(+d.Count); })
+							.curve(d3.curveMonotoneX);
+						
+						svg.append("path")
+							.datum(data)
+							.attr("d", line)
+							.attr("fill", "none")
+							.attr("opacity", 0)
+							.transition()
+							.duration(2500)
+							.attr("opacity", 1)
+
+
+					});
+				</script>
+			</div>
+	</body>
+</html>
