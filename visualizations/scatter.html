@@ -1,0 +1,264 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dementia Climate Relationships</title>
+		<link rel="stylesheet" href="../styles.css">
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js"></script>
+    </head>
+    <body>
+			<!-- Nav bar section-->
+			<div class="navbar">
+				<ul id="navlist">
+					<li>
+						<a href="../index.html">Home</a>
+					</li>
+					<li>
+						<a href="../visualizations.html">Visualizations</a>
+					</li>
+					<li>
+						<a href="../data.html">Data</a>
+					</li>
+					<li>
+						<a href="../about.html">About</a>
+					</li>
+				</ul>
+			</div>
+			<!-- End of nav bar section -->
+			<div class="wrapper">
+				<div class="horizontalList">
+					<h1> Temperature, Humidity, and Dementia Type </h1>
+					<ul style="list-style-type: none;" class="horizontalList">
+						<li class="horizontalList">
+							<input type="checkbox" name="dementia" value="1" checked> Show 1 </input>
+						</li>
+						<li class="horizontalList">
+							<input type="checkbox" name="dementia" value="2" checked> Show 2 </input>
+						</li>
+						<li class="horizontalList">
+							<input type="checkbox" name="dementia" value="3" checked> Show 3 </input>
+						</li>
+						<li class="horizontalList">
+							<input type="checkbox" name="dementia" value="4" checked> Show 4 </input>
+						</li>
+					</ul>
+				</div>
+        
+        <div class="scatterDiv"></div>
+        <div class="legend"></div>
+        <script>
+			var margin = { top: 20, right: 0, bottom: 30, left: 60 };
+            var width = 900 - margin.left - margin.right;
+            var height = 700 - margin.top - margin.bottom;
+			
+			var x = d3.scaleLinear()
+					.domain([68, 77])
+					.range([margin.left, width+margin.left]);
+				
+				var y = d3.scaleLinear()
+					.domain([44, 63])
+					.range([height+margin.top, margin.top]);
+
+				var xAxis = d3.axisBottom()
+					.scale(x)
+					.ticks(5);
+
+				// Add percentage markers to y axis
+				var yAxis = d3.axisLeft()
+					.scale(y)
+					.ticks(5)
+					.tickFormat(function(d) {
+						return d + "%";
+					});
+				
+				var svg = d3.select(".scatterDiv")
+					.append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom);
+
+				svg.append("g")
+					.attr("transform", "translate(0," + (height + margin.top) + ")")
+					.call(xAxis);
+				
+				svg.append("g")
+					.attr("transform", "translate("+(margin.left)+",0)")
+					.call(yAxis);
+
+				//add labels
+				svg.append("g")
+					.append("text")
+					.attr("x", width/2)
+					.attr("y", height + margin.top + 30)
+					.text("Average High Temperature (F)");
+				
+				svg.append("g")
+					.append("text")
+					.attr("transform", "rotate(-90)")
+					.attr("x", (-height/2))
+					.attr("y", margin.left - 40)
+					.text("Average High Humidity (%)");
+				
+				var legend = d3.select(".legend")
+					.append("svg")
+					.attr("width", 50)
+					.attr("height", 200);
+
+				legend.append("circle")
+					.attr("cx", 10)
+					.attr("cy", 10)
+					.attr("r", 5)
+					.attr("fill", "red")
+					.attr("stroke", "black");
+
+				legend.append("text")
+					.attr("x", 20)
+					.attr("y", 15)
+					.text("1");
+				
+				legend.append("circle")
+					.attr("cx", 10)
+					.attr("cy", 30)
+					.attr("r", 5)
+					.attr("fill", "blue")
+					.attr("stroke", "black");
+
+				legend.append("text")
+					.attr("x", 20)
+					.attr("y", 35)
+					.text("2");
+				
+				legend.append("circle")
+					.attr("cx", 10)
+					.attr("cy", 50)
+					.attr("r", 5)
+					.attr("fill", "green")
+					.attr("stroke", "black");
+
+				legend.append("text")
+					.attr("x", 20)
+					.attr("y", 55)
+					.text("3");
+				
+				legend.append("circle")
+					.attr("cx", 10)
+					.attr("cy", 70)
+					.attr("r", 5)
+					.attr("fill", "yellow")
+					.attr("stroke", "black");
+
+				legend.append("text")
+					.attr("x", 20)
+					.attr("y", 75)
+					.text("4");
+
+			var drawCircles = function() {
+				d3.selectAll("circle").remove();
+				legend.append("circle")
+					.attr("cx", 10)
+					.attr("cy", 10)
+					.attr("r", 5)
+					.attr("fill", "red")
+					.attr("stroke", "black");
+
+				legend.append("circle")
+					.attr("cx", 10)
+					.attr("cy", 30)
+					.attr("r", 5)
+					.attr("fill", "blue")
+					.attr("stroke", "black");
+				
+				legend.append("circle")
+					.attr("cx", 10)
+					.attr("cy", 50)
+					.attr("r", 5)
+					.attr("fill", "green")
+					.attr("stroke", "black");
+				
+				legend.append("circle")
+					.attr("cx", 10)
+					.attr("cy", 70)
+					.attr("r", 5)
+					.attr("fill", "yellow")
+					.attr("stroke", "black");
+				
+
+				d3.csv("../data/scatter.csv", function(data) {
+					svg.selectAll("circle")
+						.data(data)
+						.enter()
+						.append("circle")
+						.attr("cx", function(d) {
+							return x(+d.avgHigh);
+						})
+						.attr("cy", function(d) {
+							return y(+d.avgRHHigh);
+						})
+						.attr("r", 5)
+						.attr("fill", function(d) {
+							if (d.DEMENTIA == "1") {
+								if (d3.select("input[value='1']").property("checked")) {
+									return "red";
+								} else {
+									return "none";
+								}
+							} else if (d.DEMENTIA == "2") {
+								if (d3.select("input[value='2']").property("checked")) {
+									return "blue";
+								} else {
+									return "none";
+								}
+							} else if (d.DEMENTIA == "3") {
+								if (d3.select("input[value='3']").property("checked")) {
+									return "green";
+								} else {
+									return "none";
+								}
+							} else if (d.DEMENTIA == "4") {
+								if (d3.select("input[value='4']").property("checked")) {
+									return "yellow";
+								} else {
+									return "none";
+								}
+							} else {
+								return "none";
+							}
+						})
+						.attr("stroke", function(d) {
+							if (d.DEMENTIA == "1") {
+								if (d3.select("input[value='1']").property("checked")) {
+									return "black";
+								} else {
+									return "none";
+								}
+							} else if (d.DEMENTIA == "2") {
+								if (d3.select("input[value='2']").property("checked")) {
+									return "black";
+								} else {
+									return "none";
+								}
+							} else if (d.DEMENTIA == "3") {
+								if (d3.select("input[value='3']").property("checked")) {
+									return "black";
+								} else {
+									return "none";
+								}
+							} else if (d.DEMENTIA == "4") {
+								if (d3.select("input[value='4']").property("checked")) {
+									return "black";
+								} else {
+									return "none";
+								}
+							} else {
+								return "none";
+							}
+						});
+				});
+			}
+			drawCircles();
+			// remove the loading message
+			d3.selectAll("input").on("change", drawCircles);
+
+        </script>
+			</div>
+	</body>
+</html>
