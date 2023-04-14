@@ -127,15 +127,21 @@ p {
 
 .galleryElement {
 	width: 20%;
-	height: 300px;
 	float: left;
 	margin-right: 30;
 	margin-bottom: 50;
 	padding: 10;
-	background-color: #a9a9a9;
 	border-radius: 5px;
 	text-align: center;
 	font-size: large;
+}
+
+.galleryElement img {
+	border-radius: 10px;
+	background-color: #afafaf;
+	aspect-ratio: 1/1;
+	height: 600px;
+	border: #000000 1px solid;
 }
 
 .galleryElement:hover {
