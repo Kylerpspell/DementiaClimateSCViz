@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
     <title>Dementia Climate Relationships</title>
-		<link rel="stylesheet" href="../styles.css">
+		<link rel="stylesheet" href="./scatter.css">
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js"></script>
     </head>
@@ -151,6 +151,15 @@
 					.attr("y", 75)
 					.text("4");
 
+
+				// make all the text and axis white
+				d3.selectAll("text")
+					.attr("fill", "white");
+				d3.selectAll("path")
+					.attr("stroke", "white");
+				d3.selectAll("line")
+					.attr("stroke", "white");
+
 			var drawCircles = function() {
 				d3.selectAll("circle").remove();
 				legend.append("circle")
@@ -180,9 +189,8 @@
 					.attr("r", 5)
 					.attr("fill", "yellow")
 					.attr("stroke", "black");
-				
 
-				d3.csv("../data/scatter.csv", function(data) {
+				d3.csv("../data/scatterReduced.csv", function(data) {
 					svg.selectAll("circle")
 						.data(data)
 						.enter()
@@ -251,6 +259,17 @@
 							} else {
 								return "none";
 							}
+						})
+						.attr("svg:title", function(d) {
+							return "Hello World";
+						})
+						.on("mouseover", function(d) {
+							d3.select(this)
+								.attr("r", 8);
+						})
+						.on("mouseout", function(d) {
+							d3.select(this)
+								.attr("r", 5);
 						});
 				});
 			}

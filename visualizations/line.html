@@ -26,13 +26,10 @@
 			</div>
 			<!-- End of nav bar section -->
 			<div class="lineGraph">
-				<h1>
-					Dementia Climate Relationships
-				</h1>
 				<script>
 					var chartwidth = 1500;
-					var chartheight = 400;
-					var margin = 60;
+					var chartheight = 800;
+					var margin = 100;
 					var maxx = 2023;
 					var maxy = 30000;
 				
@@ -50,10 +47,16 @@
 								d3.timeYear(date);
 							});
 					
+					// Add the Y Axis for count of dementia
 					var yScale = d3.scaleLinear()
 						.domain([0, maxy])
 						.range([chartheight - margin, margin]);
 					
+					// Add the Y Axis for high temp
+					var yScale2 = d3.scaleLinear()
+						.domain([0, 100])
+						.range([chartheight - margin, margin]);
+
 					// Add the X Axis
 					svg.append("g")
 						.attr("transform", "translate(0," + (chartheight - margin) + ")")
@@ -61,12 +64,19 @@
 						.attr("fill", "white")
 						.call(d3.axisBottom(xScale));
 					
-					// Add the Y Axis
+					// Add the Y Axis for count of dementia
 					svg.append("g")
 						.attr("transform", "translate(" + margin + ",0)")
 						// make the text white
 						.attr("fill", "white")
 						.call(d3.axisLeft(yScale));
+					
+					// Add the Y Axis for high temp
+					svg.append("g")
+						.attr("transform", "translate(" + (chartwidth - margin) + ",0)")
+						.attr("fill", "red")
+						.call(d3.axisRight(yScale2));
+					
 					
 					// make the axis and ticks white
 					svg.selectAll(".axis path")
@@ -105,17 +115,82 @@
 							.x(function(d) { return xScale(+new Date(d.Year)); })
 							.y(function(d) { return yScale(+d.Count); })
 							.curve(d3.curveMonotoneX);
-						
+
+						svg.selectAll("circles")
+							.data(data)
+							.enter()
+							.append("circle")
+							.attr("cx", function(d) { return xScale(+new Date(d.Year)); })
+							.attr("cy",chartheight - margin)
+							.attr("r", 5)
+							.attr("fill", "red")
+							.transition()
+							.duration(function(d, i) {
+								return i * 60;
+							})
+							.attr("cy", function(d) { return yScale2(+d.High); });
+
+							var line2 = d3.line()
+								.x(function(d) { return xScale(+new Date(d.Year)); })
+								.y(function(d) { return yScale2(+d.High); })
+								.curve(d3.curveMonotoneX);
+							
+
 						svg.append("path")
 							.datum(data)
 							.attr("d", line)
 							.attr("fill", "none")
+							.attr("stroke", "white")
 							.attr("opacity", 0)
 							.transition()
 							.duration(2500)
 							.attr("opacity", 1)
 
-
+						svg.append("path")
+							.datum(data)
+							.attr("d", line2)
+							.attr("fill", "none")
+							.attr("opacity", 0)
+							.attr("stroke", "red")
+							.transition()
+							.duration(2500)
+							.attr("opacity", 1)
+						
+						svg.append("text")
+							.attr("x", (chartwidth / 2))             
+							.attr("y", (margin / 2))
+							.attr("text-anchor", "middle")  
+							.style("font-size", "2em") 
+							.attr("fill", "white")
+							.text("Dementia Cases Over Time");
+						
+						svg.append("text")
+							.attr("x", (chartwidth / 2))             
+							.attr("y", (chartheight - (margin /4)))
+							.attr("text-anchor", "middle")  
+							.style("font-size", "1.5em") 
+							.attr("fill", "white")
+							.text("Year");
+						
+						svg.append("text")
+							.attr("transform", "rotate(-90)")
+							.attr("y", 0)
+							.attr("x",0 - (chartheight / 2))
+							.attr("dy", "1em")
+							.style("text-anchor", "middle")
+							.style("font-size", "1.5em") 
+							.attr("fill", "white")
+							.text("Number of Cases");
+						
+						svg.append("text")
+							.attr("transform", "rotate(-90)")
+							.attr("y", chartwidth - 30)
+							.attr("x",0 - (chartheight / 2))
+							.attr("dy", "1em")
+							.style("text-anchor", "middle")
+							.style("font-size", "1.5em") 
+							.attr("fill", "red")
+							.text("Avg High Temperature");
 					});
 				</script>
 			</div>

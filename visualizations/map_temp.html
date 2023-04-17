@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dementia Climate Relationships</title>
+	<link rel="stylesheet" href="./map.css">
+	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+	<script src="https://d3js.org/topojson.v1.min.js"></script>
+  </head>
+    <body>
+		<div id="mapDiv">
+		<!-- Nav bar section-->
+		<div class="navbar">
+			<ul id="navlist">
+				<li>
+					<a href="../index.html">Home</a>
+				</li>
+				<li>
+					<a href="../visualizations.html">Visualizations</a>
+				</li>
+				<li>
+					<a href="../data.html">Data</a>
+				</li>
+				<li>
+					<a href="../about.html">About</a>
+				</li>
+			</ul>
+		</div>
+		<!-- End of nav bar section -->
+		<script>
+			var width = 1200,
+				height = 700;
+
+			// make color scale from white to blue from 0.1 to 2.0
+			var color = d3.scaleLinear()
+
+				.domain([50, 70])
+				.range(["#a8de78", "#deae78"]);
+
+			// center on south carolina
+			var projection =  d3.geoAlbersUsa()
+				.scale(11000)
+				.translate([-1850, height/2-850]);
+				
+			// create path generator and zoom in on south carolina
+
+			var path = d3.geoPath()
+				.projection(projection);
+
+			
+			var svg = d3.select("body").append("svg")
+				.attr("width", width)
+				.attr("height", height);
+
+
+			var makeMap = function(){
+				var csvPath = "../data/highTempCounty.csv";
+
+				d3.json("https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers-counties.json",function(json){
+					d3.csv(csvPath, function(data) {
+						var countyTemps = {};
+                        data.forEach(function(d) {
+                            countyTemps[d.County] = +d.HighTemp;
+                        });
+
+						svg.selectAll("path")
+							.attr("id", "state_fips")
+							.data(topojson.feature(json, json.objects.collection).features.filter(function(d) { return d.properties.state_fips == 45; }))
+							.enter()
+							.append("path")
+							.attr("d", path)
+							.attr("stroke","white")
+							.attr("fill", function(d) {
+                                return color(countyTemps[d.properties.name]);
+                            })
+
+						// add title to each county
+                            .append("title")
+                                .text(function(d) {
+                                        return "County: " + d.properties.name 
+                                        + "\nHigh Temp: " + Math.round(countyTemps[d.properties.name]*100)/100;
+                                });
+					    });
+				    });
+            }	
+			makeMap();
+		</script>
+
+	</body>
+</html>

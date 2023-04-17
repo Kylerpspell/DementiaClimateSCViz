@@ -201,44 +201,7 @@ p {
 #wrapper {
 	width: 100%;
 	margin: 0 auto;
-	display: block;
+	display: flex;
+	flex-direction: column;
 }
 
-path {
-	stroke: #000000;
-	stroke-width: 1.5;
-	transition: all .2s ease-in-out;
-}
-
-
-path:hover {
-	fill: #a9a9a9;
-	cursor:pointer;
-}
-
-#state-borders {
-	fill: white;
-	stroke: #000000;
-	stroke-width: 10.5px;
-	stroke-linejoin: round;
-	stroke-linecap: round;
-	pointer-events: none;
-}
-
-input[type-checkbox] {
-	padding: 10px;
-	margin: 10px,0;
-}
-
-.scatterDiv {
-	width: 90%;
-	display: inline-flex;
-}
-
-.horizontalList li {
-	float: left;
-	display: block;
-	padding-left: 30;
-	font-size: large;
-	text-align: center;
-}

@@ -2,11 +2,12 @@
   <head>
     <meta charset="utf-8">
     <title>Dementia Climate Relationships</title>
-	<link rel="stylesheet" href="../styles.css">
+	<link rel="stylesheet" href="./map.css">
 	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 	<script src="https://d3js.org/topojson.v1.min.js"></script>
   </head>
     <body>
+		<div id="mapDiv">
 		<!-- Nav bar section-->
 		<div class="navbar">
 			<ul id="navlist">
@@ -25,13 +26,12 @@
 			</ul>
 		</div>
 		<!-- End of nav bar section -->
-
-		<div id="normDiv">
-			<input type="checkbox" id="normalize" checked>
-			<label for="normalize" style="font-size: 20px;">Normalize</label>
-			</input>
+			<div id="normDiv">
+				<input type="checkbox" id="normalize" checked>
+				<label for="normalize" style="font-size: 20px;">Normalize</label>
+				</input>
+			</div>
 		</div>
-
 		<script>
 			var width = 1200,
 				height = 700;
@@ -63,7 +63,6 @@
 			var normalized = document.getElementById("normalize").checked;
 
 			var makeMap = function(normed){
-				console.log("normed: " + normed);
 				var csvPath = "";
 				if(normed){
 					csvPath = "../data/zipbinnormed.csv";
