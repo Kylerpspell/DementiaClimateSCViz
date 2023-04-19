@@ -25,8 +25,8 @@
 				</li>
 			</ul>
 		</div>
-		<h3>
-			Average High Temperature by County
+        <h3>
+			Average High Humidity by County
 		</h3>
 		<!-- End of nav bar section -->
 		<script>
@@ -36,7 +36,7 @@
 			// make color scale from white to blue from 0.1 to 2.0
 			var color = d3.scaleLinear()
 
-				.domain([50, 70])
+				.domain([36, 55])
 				.range(["#a8de78", "#deae78"]);
 
 			// center on south carolina
@@ -55,13 +55,13 @@
 
 
 			var makeMap = function(){
-				var csvPath = "../data/highTempCounty.csv";
+				var csvPath = "../data/RHCounty.csv";
 
 				d3.json("https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers-counties.json",function(json){
 					d3.csv(csvPath, function(data) {
 						var countyTemps = {};
                         data.forEach(function(d) {
-                            countyTemps[d.County] = +d.HighTemp;
+                            countyTemps[d.County] = +d.RH;
                         });
 
 						svg.selectAll("path")
@@ -79,13 +79,25 @@
                             .append("title")
                                 .text(function(d) {
                                         return "County: " + d.properties.name 
-                                        + "\nHigh Temp: " + Math.round(countyTemps[d.properties.name]*100)/100;
+                                        + "\nAvg. Relative Humidity: " + Math.round(countyTemps[d.properties.name]*100)/100;
                                 });
 					    });
 				    });
             }	
 			makeMap();
 		</script>
+	</div>
+	<div class="story">
+		<button onClick="window.location.href='./map_temp.html'">Back</button>
+		<br>
+		
+		You can take a look at the data <a href="../data.html">here</a>.
+		<br>
 
+		Or you can look at each of my visualizations <a href="../visualizations.html">here</a>.
+		<br>
+
+		Finally, you can learn more about me <a href="../about.html">here</a>.
+	</div>
 	</body>
 </html>

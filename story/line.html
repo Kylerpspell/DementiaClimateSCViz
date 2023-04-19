@@ -105,7 +105,8 @@
 							.attr("fill", "white")
 							.attr("cy", function(d) { return yScale(+d.Count); })
 							.append("title")
-								.text(function(d) { return d.Count + " Cases" });
+								.text(function(d) { return d.Year + ": " + 
+									d.Count + " Cases" });
 
 
 						var line = d3.line()
@@ -122,7 +123,7 @@
 							.attr("fill", "red")
 							.attr("cy", function(d) { return yScale2(+d.High); })
 							.append("title")
-								.text(function(d) { return Math.round(+d.High*100)/100 + "F" });
+								.text(function(d) { return d.Year + ": " + Math.round(+d.High*100)/100 + "F" });
 
 							var line2 = d3.line()
 								.x(function(d) { return xScale(+new Date(d.Year)); })
@@ -182,5 +183,11 @@
 					});
 				</script>
 			</div>
+		</div>
+	</div>
+	<div class="story">
+		Next, we will try to find a relationship with climate, humidity and the type of dementia.
+		<button onclick="window.location.href='scatter.html'">Next</button>
+	</div>
 	</body>
 </html>

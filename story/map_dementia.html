@@ -25,18 +25,27 @@
 				</li>
 			</ul>
 		</div>
-		<h3>
-			Average High Temperature by County
-		</h3>
 		<!-- End of nav bar section -->
+			<div id="normDiv">
+				<input type="checkbox" id="normalize" checked>
+				<label for="normalize" style="font-size: 20px;">Normalize</label>
+				</input>
+			</div>
+			<h3>
+				Number of Dementia Cases per County
+			</h3>
+		</div>
 		<script>
 			var width = 1200,
 				height = 700;
 
 			// make color scale from white to blue from 0.1 to 2.0
 			var color = d3.scaleLinear()
+				.domain([0, 33000])
+				.range(["#a8de78", "#deae78"]);
 
-				.domain([50, 70])
+			var normedColor = d3.scaleLinear()
+				.domain([0, 100])
 				.range(["#a8de78", "#deae78"]);
 
 			// center on south carolina
@@ -45,6 +54,7 @@
 				.translate([-1850, height/2-850]);
 				
 			// create path generator and zoom in on south carolina
+
 			var path = d3.geoPath()
 				.projection(projection);
 
@@ -53,16 +63,22 @@
 				.attr("width", width)
 				.attr("height", height);
 
+			var normalized = document.getElementById("normalize").checked;
 
-			var makeMap = function(){
-				var csvPath = "../data/highTempCounty.csv";
-
+			var makeMap = function(normed){
+				var csvPath = "";
+				if(normed){
+					csvPath = "../data/zipbinnormed.csv";
+				}
+				else{
+					csvPath = "../data/zipbin.csv";
+				}
 				d3.json("https://raw.githubusercontent.com/deldersveld/topojson/master/countries/united-states/us-albers-counties.json",function(json){
 					d3.csv(csvPath, function(data) {
-						var countyTemps = {};
-                        data.forEach(function(d) {
-                            countyTemps[d.County] = +d.HighTemp;
-                        });
+						var countyRates = {};
+						data.forEach(function(d) {
+							countyRates[d.County] = +d.Count;
+						});
 
 						svg.selectAll("path")
 							.attr("id", "state_fips")
@@ -72,20 +88,41 @@
 							.attr("d", path)
 							.attr("stroke","white")
 							.attr("fill", function(d) {
-                                return color(countyTemps[d.properties.name]);
-                            })
-
+								if(normed)
+									var value = countyRates[d.properties.name]*100000;
+								else
+									var value = countyRates[d.properties.name];
+								if (value) {
+									return color(value)
+								} else {
+									return "red";
+								}
+								
+							})
 						// add title to each county
-                            .append("title")
-                                .text(function(d) {
-                                        return "County: " + d.properties.name 
-                                        + "\nHigh Temp: " + Math.round(countyTemps[d.properties.name]*100)/100;
-                                });
-					    });
-				    });
-            }	
-			makeMap();
-		</script>
+						.append("title")
+							.text(function(d) {
+								if(normed)
+									return "County: " + d.properties.name + "\nRate: " + Math.round(countyRates[d.properties.name]*100000) + " per 100,000";
+								else
+									return "County: " + d.properties.name + "\nCount: " + countyRates[d.properties.name];
+							});
+					});
+					
+				});
+			}	
+			makeMap(normalized);
 
+			// update map when checkbox is clicked
+			document.getElementById("normalize").onclick = function() {
+				normalized = document.getElementById("normalize").checked;
+				svg.selectAll("path").remove();
+				makeMap(normalized);
+			};
+		</script>
+		<div class="story">
+			Now lets compare this map to the map of tempurature distrobution.
+			<button onClick="window.location.href = 'map_temp.html';">Next</button>
+		</div>
 	</body>
 </html>
