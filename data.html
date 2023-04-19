@@ -20,10 +20,88 @@
 				<li id="selected">
 					<a href="data.html">Data</a>
 				</li>
-				<li>
-					<a href="about.html">About</a>
-				</li>
 			</ul>
 		</div>
+		<!-- End of nav bar section -->
+		<div class="dataDict">
+			<h3>
+				Alzheimers Disease Registry:
+			</h3>
+			This data was collected by the Arnold School of Public Health and is the nations most comprehensive
+			Registry of its kind. The data I used in my project was:
+				<ul>
+					<li>
+						<b>YODX:</b> Year of diagnosis
+					</li>
+					<li>
+						<b>DX_Age:</b> Age of diagnosis
+					</li>
+					<li>
+						<b>Dementia:</b> Type of dementia
+					</li>
+					<li>
+						<b>zip0</b>: 5 digit zipcode
+					</li>
+				</ul>
+			I used ~98,000 records from the registry to populate my visualizations.
+
+			<a href="https://osa-sc.org/programs/alzheimers-disease-registry">Link to their page</a>
+				
+			<h3>
+				Climate Data:
+			</h3>
+			This data was collected by using the Farmers Almanac Weather History Page. I used the zipcode data
+			to populate a 20 year history of climate data for each record in the database. The data I used were:
+
+			<ul>
+				<li>
+					<b>High Temp:</b> The high tempurature recorded on the 15th of each month for the past 20 years. This was 
+					averaged across the entire 20 year span to recieve a single value for each record.
+				</li>
+				<li>
+					<b>Dewpoint:</b> The dewpoint recorded on the 15th of each month for the past 20 years. This was
+					then used with the tempurature to <a href="https://bmcnoldy.rsmas.miami.edu/Humidity.html">calculate</a> the Relative Humidity day. This was then averaged across
+					the entire 20 year span to recieve a single value for each record. 
+				</li>
+			</ul>
+
+			This was done using a python webscraper that I wrote. In total there were ~256,000 requests made to the website and then 
+			stored in a local database.
+
+			<a href="https://www.almanac.com/weather/history">Link to their page</a>
+		
+			<h3>
+				US Census Data:
+			</h3>
+			I collected data from the US Census Bureau to get the population of each county. This data was used to 
+			normalize the data for one of the visualizations.
+
+			<a href="https://www.census.gov/data/tables/time-series/demo/popest/2010s-counties-total.html">Link to their page</a>
+			
+			<h3>
+				US Zipcode Data:
+			</h3>
+			I collected data from zip-codes.com to get the county for each zipcode. This data was used to
+			generate the county data for the visualizations.
+
+			<a href="https://www.zip-codes.com/state/sc.asp">Link to their page</a>
+
+
+			<h3>
+				Tools:
+			</h3>
+			<ul>
+				<li>
+					<a href="https://www.python.org/">Python</a>
+				</li>
+				<li>
+					<a href="https://d3js.org/">d3js</a>
+				</li>
+			</ul>
+		
+		</div>
+
 	</body>
+</html>
+
 		

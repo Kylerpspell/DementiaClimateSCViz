@@ -125,6 +125,7 @@ p {
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(2, 2fr);
 	grid-gap: 10px;
+	justify-items: center;
 }
 
 .galleryElement {
@@ -215,7 +216,7 @@ p {
 
 .story button {
 	color: #fdfdfd;
-	background-color: #5d5d5d;
+	background-color: #6d6d6d;
 	border: none;
 	padding: 15px 32px;
 	text-align: center;
@@ -228,4 +229,18 @@ p {
 .story button:hover {
 	background-color: #a8de78;
 	color: #fdfdfd;
+}
+
+.dataDict {
+	color: #fff;
+	font-size: 20px;
+}
+
+.dataDict h3 {
+	color: #a8de78;
+
+}
+
+.dataDict a {
+	color: #a8de78;
 }
