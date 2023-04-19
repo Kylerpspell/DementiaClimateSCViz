@@ -26,27 +26,28 @@
 			</div>
 			<!-- End of nav bar section -->
 			<div class="wrapper">
+				<h1> Temperature, Humidity, and Dementia Type </h1>
 				<div id="inner">
-				<div class="horizontalList">
-					<h1> Temperature, Humidity, and Dementia Type </h1>
-					<ul style="list-style-type: none;" class="horizontalList">
+
+				<div class="legend"></div>
+				<div class="scatterDiv"></div>
+				<div>
+					
+					<ul style="list-style-type: none;">
 						<li class="horizontalList">
-							<input type="checkbox" name="dementia" value="1" checked> Show 1 </input>
+							<input type="checkbox" name="dementia" value="1" checked> Show Alzheimers </input>
 						</li>
 						<li class="horizontalList">
-							<input type="checkbox" name="dementia" value="2" checked> Show 2 </input>
+							<input type="checkbox" name="dementia" value="2" checked> Show Vascular Dementia </input>
 						</li>
 						<li class="horizontalList">
-							<input type="checkbox" name="dementia" value="3" checked> Show 3 </input>
+							<input type="checkbox" name="dementia" value="3" checked> Show Mixed </input>
 						</li>
 						<li class="horizontalList">
-							<input type="checkbox" name="dementia" value="4" checked> Show 4 </input>
+							<input type="checkbox" name="dementia" value="4" checked> Show Other </input>
 						</li>
 					</ul>
 				</div>
-				<div class="legend"></div>
-				<div class="scatterDiv"></div>
-
 				</div>
 				<script>
 					var margin = { top: 20, right: 0, bottom: 30, left: 60 };
@@ -102,7 +103,7 @@
 						
 						var legend = d3.select(".scatterDiv")
 							.append("svg")
-							.attr("width", 50)
+							.attr("width", 200)
 							.attr("height", 200);
 
 						legend.append("circle")
@@ -115,7 +116,7 @@
 						legend.append("text")
 							.attr("x", 20)
 							.attr("y", 15)
-							.text("1");
+							.text("Alzheimers");
 						
 						legend.append("circle")
 							.attr("cx", 10)
@@ -127,7 +128,7 @@
 						legend.append("text")
 							.attr("x", 20)
 							.attr("y", 35)
-							.text("2");
+							.text("Vascular Dementia");
 						
 						legend.append("circle")
 							.attr("cx", 10)
@@ -139,7 +140,7 @@
 						legend.append("text")
 							.attr("x", 20)
 							.attr("y", 55)
-							.text("3");
+							.text("Mixed");
 						
 						legend.append("circle")
 							.attr("cx", 10)
@@ -151,8 +152,7 @@
 						legend.append("text")
 							.attr("x", 20)
 							.attr("y", 75)
-							.text("4");
-
+							.text("Other");
 
 						// make all the text and axis white
 						d3.selectAll("text")
@@ -322,11 +322,7 @@
 					drawCircles();
 					// remove the loading message
 					d3.selectAll("input").on("change", drawCircles);
-
 				</script>
-			</div>
-		</div>
-	</div>
 
 	<div class="story">
 		Now lets look at how these datapoints are distributed across the state, starting with the cases of dementia.
